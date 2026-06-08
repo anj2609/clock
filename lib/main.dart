@@ -27,6 +27,7 @@ Future<void> main() async {
   await Hive.openBox<Alarm>(AppConstants.hiveBoxName);
 
   await NotificationService.initialize();
+  await NotificationService.initializeFCM();
 
   runApp(const ProviderScope(child: AlarmClockApp()));
 }

@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
@@ -140,4 +142,45 @@ class NotificationService {
   static Future<void> cancelAllAlarms() async {
     await _plugin.cancelAll();
   }
+
+  static Future<void> initializeFCM() async {
+    final messaging = FirebaseMessaging.instance;
+
+    await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    final token = await messaging.getToken();
+    developer.log('FCM Token: $token', name: 'NotificationService');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      final notification = message.notification;
+      if (notification != null) {
+        _plugin.show(
+          notification.hashCode,
+          notification.title ?? AppConstants.appName,
+          notification.body ?? '',
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              AppConstants.notificationChannelId,
+              AppConstants.notificationChannelName,
+              channelDescription: AppConstants.notificationChannelDescription,
+              importance: Importance.max,
+              priority: Priority.high,
+            ),
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      developer.log(
+        'Message opened app: ${message.messageId}',
+        name: 'NotificationService',
+      );
+    });
+  }
 }
+
