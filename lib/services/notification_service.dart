@@ -26,6 +26,7 @@ class NotificationService {
 
     if (androidPlugin != null) {
       await androidPlugin.requestNotificationsPermission();
+      await androidPlugin.requestExactAlarmsPermission();
     }
 
     await _createNotificationChannel();
@@ -39,6 +40,7 @@ class NotificationService {
       importance: Importance.max,
       playSound: true,
       enableVibration: true,
+      audioAttributesUsage: AudioAttributesUsage.alarm,
     );
 
     final androidPlugin =
@@ -66,6 +68,8 @@ class NotificationService {
       playSound: true,
       enableVibration: true,
       fullScreenIntent: true,
+      category: AndroidNotificationCategory.alarm,
+      audioAttributesUsage: AudioAttributesUsage.alarm,
     );
 
     const details = NotificationDetails(android: androidDetails);
@@ -81,7 +85,7 @@ class NotificationService {
           alarm.time,
           scheduledDate,
           details,
-          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          androidScheduleMode: AndroidScheduleMode.alarmClock,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime,
           matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
@@ -108,7 +112,7 @@ class NotificationService {
         alarm.time,
         scheduledDate,
         details,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.alarmClock,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
       );

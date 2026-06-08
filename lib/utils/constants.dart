@@ -9,7 +9,7 @@ class AppConstants {
   static const String firestoreSettingsCollection = 'settings';
   static const String firestoreThemeDocument = 'theme';
 
-  static const String notificationChannelId = 'alarm_channel';
+  static const String notificationChannelId = 'alarm_channel_v2';
   static const String notificationChannelName = 'Alarm Notifications';
   static const String notificationChannelDescription =
       'Channel for alarm notifications';

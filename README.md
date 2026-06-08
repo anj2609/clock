@@ -174,7 +174,7 @@ Select your Firebase project and check **Android** only. This generates:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/alarm_clock_app.git
+git clone https://github.com/anj2609/clock.git
 cd alarm_clock_app
 
 # 2. Install dependencies
@@ -251,12 +251,9 @@ Final cleanup: resolve analyzer warnings, verify no comments remain
 | FCM push notifications | ✅ |
 | Dark mode saved to Firestore | ✅ |
 
----
 
-## Screenshots
 
-> Add screenshots or a screen recording here before submission.
 
----
 
-*Built for Flutter Intern Interview Task — Alarm Clock App with Firebase*
+
+
