@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.anjali.alarm_clock_app"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
