@@ -138,6 +138,8 @@ class FirebaseService {
         return AppConstants.errorWeakPassword;
       case 'email-already-in-use':
         return AppConstants.errorEmailAlreadyInUse;
+      case 'invalid-credential':
+        return 'Invalid email or password.';
       case 'network-request-failed':
         return AppConstants.errorNetworkRequest;
       default:

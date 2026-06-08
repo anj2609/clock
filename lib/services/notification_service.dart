@@ -148,43 +148,48 @@ class NotificationService {
   }
 
   static Future<void> initializeFCM() async {
-    final messaging = FirebaseMessaging.instance;
+    try {
+      final messaging = FirebaseMessaging.instance;
 
-    await messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    final token = await messaging.getToken();
-    developer.log('FCM Token: $token', name: 'NotificationService');
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      final notification = message.notification;
-      if (notification != null) {
-        _plugin.show(
-          notification.hashCode,
-          notification.title ?? AppConstants.appName,
-          notification.body ?? '',
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              AppConstants.notificationChannelId,
-              AppConstants.notificationChannelName,
-              channelDescription: AppConstants.notificationChannelDescription,
-              importance: Importance.max,
-              priority: Priority.high,
-            ),
-          ),
-        );
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      developer.log(
-        'Message opened app: ${message.messageId}',
-        name: 'NotificationService',
+      await messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
       );
-    });
+
+      final token = await messaging.getToken();
+      developer.log('FCM Token: $token', name: 'NotificationService');
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        final notification = message.notification;
+        if (notification != null) {
+          _plugin.show(
+            notification.hashCode,
+            notification.title ?? AppConstants.appName,
+            notification.body ?? '',
+            const NotificationDetails(
+              android: AndroidNotificationDetails(
+                AppConstants.notificationChannelId,
+                AppConstants.notificationChannelName,
+                channelDescription: AppConstants.notificationChannelDescription,
+                importance: Importance.max,
+                priority: Priority.high,
+              ),
+            ),
+          );
+        }
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        developer.log(
+          'Message opened app: ${message.messageId}',
+          name: 'NotificationService',
+        );
+      });
+    } catch (e) {
+      developer.log('FCM Initialization failed (likely missing config): $e',
+          name: 'NotificationService');
+    }
   }
 }
 

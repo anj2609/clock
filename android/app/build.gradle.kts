@@ -1,11 +1,14 @@
 plugins {
     id("com.android.application")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    // END: FlutterFire Configuration
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-    namespace = "com.example.alarm_clock_app"
+    namespace = "com.anjali.alarm_clock_app"
     compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.alarm_clock_app"
+        applicationId = "com.anjali.alarm_clock_app"
         minSdk = flutter.minSdkVersion
         targetSdk = 34
         versionCode = flutter.versionCode

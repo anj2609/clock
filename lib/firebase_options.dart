@@ -15,10 +15,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    storageBucket: 'YOUR-STORAGE-BUCKET',
+    apiKey: 'AIzaSyCivk7lWREDEuwtWzfXN_hgwoKij5Pg4hA',
+    appId: '1:1043026133058:android:e20cb63138ac8b6d3baddb',
+    messagingSenderId: '1043026133058',
+    projectId: 'alarm-clock-app-4f091',
+    storageBucket: 'alarm-clock-app-4f091.firebasestorage.app',
   );
 }
