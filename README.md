@@ -14,6 +14,17 @@ A production-ready alarm clock application built with Flutter, Firebase, and Riv
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/screenshot1.jpg" width="200" />
+  <img src="assets/screenshots/screenshot2.jpg" width="200" />
+  <img src="assets/screenshots/screenshot3.jpg" width="200" />
+  <img src="assets/screenshots/screenshot4.jpg" width="200" />
+</p>
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
