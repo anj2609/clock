@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import '../models/alarm.dart';
 import '../utils/constants.dart';
@@ -12,6 +13,8 @@ class NotificationService {
 
   static Future<void> initialize() async {
     tz_data.initializeTimeZones();
+    final timeZoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
 
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
