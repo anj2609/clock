@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.alarm_clock_app"
-        minSdk = 21
+        minSdk = flutter.minSdkVersion
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName

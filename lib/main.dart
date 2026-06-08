@@ -32,65 +32,68 @@ Future<void> main() async {
   runApp(const ProviderScope(child: AlarmClockApp()));
 }
 
+final routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: AppConstants.routeLogin,
+    refreshListenable: RouterNotifier(ref),
+    redirect: (context, state) {
+      final authState = ref.read(authStateProvider);
+
+      return authState.when(
+        data: (user) {
+          final isOnAuth = state.matchedLocation == AppConstants.routeLogin ||
+              state.matchedLocation == AppConstants.routeRegister;
+
+          if (user == null && !isOnAuth) {
+            return AppConstants.routeLogin;
+          }
+
+          if (user != null && isOnAuth) {
+            return AppConstants.routeHome;
+          }
+
+          return null;
+        },
+        loading: () => null,
+        error: (_, __) => AppConstants.routeLogin,
+      );
+    },
+    routes: [
+      GoRoute(
+        path: AppConstants.routeLogin,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AppConstants.routeRegister,
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: AppConstants.routeHome,
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: AppConstants.routeAddAlarm,
+        builder: (context, state) => const AddEditAlarmScreen(),
+      ),
+      GoRoute(
+        path: '${AppConstants.routeEditAlarm}/:alarmId',
+        builder: (context, state) => AddEditAlarmScreen(
+          alarmId: state.pathParameters['alarmId'],
+        ),
+      ),
+    ],
+  );
+});
+
 class AlarmClockApp extends ConsumerWidget {
   const AlarmClockApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
+    final router = ref.watch(routerProvider);
 
     ref.watch(connectivityListenerProvider);
-
-    final router = GoRouter(
-      initialLocation: AppConstants.routeLogin,
-      refreshListenable: RouterNotifier(ref),
-      redirect: (context, state) {
-        final authState = ref.read(authStateProvider);
-
-        return authState.when(
-          data: (user) {
-            final isOnAuth = state.matchedLocation == AppConstants.routeLogin ||
-                state.matchedLocation == AppConstants.routeRegister;
-
-            if (user == null && !isOnAuth) {
-              return AppConstants.routeLogin;
-            }
-
-            if (user != null && isOnAuth) {
-              return AppConstants.routeHome;
-            }
-
-            return null;
-          },
-          loading: () => null,
-          error: (_, __) => AppConstants.routeLogin,
-        );
-      },
-      routes: [
-        GoRoute(
-          path: AppConstants.routeLogin,
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
-          path: AppConstants.routeRegister,
-          builder: (context, state) => const RegisterScreen(),
-        ),
-        GoRoute(
-          path: AppConstants.routeHome,
-          builder: (context, state) => const HomeScreen(),
-        ),
-        GoRoute(
-          path: AppConstants.routeAddAlarm,
-          builder: (context, state) => const AddEditAlarmScreen(),
-        ),
-        GoRoute(
-          path: '${AppConstants.routeEditAlarm}/:alarmId',
-          builder: (context, state) => AddEditAlarmScreen(
-            alarmId: state.pathParameters['alarmId'],
-          ),
-        ),
-      ],
-    );
 
     return MaterialApp.router(
       title: AppConstants.appName,
